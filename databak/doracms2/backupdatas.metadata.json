@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"githubcms.backupdatas"}],"uuid":"006df7972aa547e1bf768b9c89319034"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"doracms2.backupdatas"}],"uuid":"f1f3c4f5080e451fbd774cb3771c361f"}

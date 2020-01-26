@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"githubcms.adminusers"}],"uuid":"daf98ccc3c8347e08049b046bbdc2690"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"doracms2.adminusers"}],"uuid":"bbd7dd7aaa044bd8a189557625e73b93"}
