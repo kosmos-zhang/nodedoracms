@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import GithubCorner from "@/components/GithubCorner";
 import PanelGroup from "./components/PanelGroup";
 import ResourceView from "./components/ResourceView.vue";
 import TransactionTable from "./components/TransactionTable";
@@ -59,7 +58,6 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "DashboardAdmin",
   components: {
-    GithubCorner,
     PanelGroup,
     ResourceView,
     TransactionTable,
