@@ -142,14 +142,6 @@ http://localhost:8080/dr-admin
 登录账号：doramart/123456    doracms/123456
 ```
 
-## 技术交流群
-<img width="650" src="http://cdn.html-js.cn/contactbywechatqq1.jpg" alt="">
-
-
-### 捐赠
-如果你发现DoraCMS很有用，可以请生哥喝杯咖啡(⊙o⊙)哦
-<img width="650" src="http://cdn.html-js.cn/payme.jpg" alt="">
-
 # LICENSE
 
 MIT
