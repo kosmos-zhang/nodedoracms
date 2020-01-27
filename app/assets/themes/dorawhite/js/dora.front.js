@@ -413,7 +413,7 @@ function askContentThu(askContentThumbsUp) {
 
     })
 }
-// 推荐帖子静态部分
+// 推荐文档静态部分
 var rcStaticlVm = avalon.define({
     $id: 'rcStatic',
     askLike: (e, type, targetId) => {

@@ -29,7 +29,7 @@ module.exports = app => {
         },
         siteDomain: {
             type: String,
-            default: 'https://www.html-js.cn'
+            default: 'http://111.229.88.118:8080/'
         },
         siteDiscription: {
             type: String,

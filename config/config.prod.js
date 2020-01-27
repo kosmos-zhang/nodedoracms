@@ -5,7 +5,7 @@ module.exports = appInfo => {
 
     return {
         // 插件路径
-        admin_root_path: 'https://cdn.html-js.cn/cms/plugins/static/admin',
+        admin_root_path: 'http://111.229.88.118:8080/cms/plugins/static/admin',
         // 数据库连接
         mongoose: {
             client: {
@@ -27,8 +27,8 @@ module.exports = appInfo => {
             dir: '/home/doraData/logsdir/doracms',
         },
         // 服务地址配置
-        server_path: 'https://www.html-js.cn',
-        server_api: 'https://www.html-js.cn/api',
+        server_path: 'http://111.229.88.118:8080',
+        server_api: 'http://111.229.88.118:8080/api',
 
     }
 };

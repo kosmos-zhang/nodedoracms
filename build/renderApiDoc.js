@@ -18,7 +18,7 @@ if (docState == 'prd') {
         if (fs.existsSync(targetPath)) {
             let apiDocHtmlText = fs.readFileSync(targetPath, 'utf-8');
             var reg = new RegExp('http://localhost:8080', "g")
-            var newApiHtmlText = apiDocHtmlText.replace(reg, 'https://www.html-js.cn');
+            var newApiHtmlText = apiDocHtmlText.replace(reg, 'http://111.229.88.118:8080');
             fs.writeFileSync(targetPath, newApiHtmlText);
         }
     }
