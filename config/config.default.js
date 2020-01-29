@@ -47,7 +47,7 @@ module.exports = appInfo => {
     },
 
     // cdn域名
-    origin: 'http://111.229.88.118:8080',
+    origin: 'https://cdn.html-js.cn',
     // 系统服务提供商
     doracms_api: 'https://api.html-js.cn',
     // 模板文件目录

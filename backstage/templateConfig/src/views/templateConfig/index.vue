@@ -221,7 +221,7 @@
                     <hr style="margin:20px 0;" />
                     <el-row>
                       <el-link
-                        href="http://111.229.88.118:8080/cmsSource20190516172452.zip"
+                        href="https://cdn.html-js.cn/cmsSource20190516172452.zip"
                         target="_blank"
                       >
                         <i class="el-icon-s-cooperation"></i>下载示例模板
