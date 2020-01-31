@@ -21,7 +21,7 @@ module.exports = app => {
         },
         siteName: {
             type: String,
-            default: '老港妇联'
+            default: '老港俪人荟'
         },
         ogTitle: {
             type: String,

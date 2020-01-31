@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '老港妇联',
+  title: '老港俪人荟',
 
   /**
    * @type {boolean} true | false
