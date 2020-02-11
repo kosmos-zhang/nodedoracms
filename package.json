@@ -34,6 +34,7 @@
     "xss": "^1.0.6"
   },
   "devDependencies": {
+    "@types/shelljs": "^0.8.6",
     "autod": "^3.0.1",
     "autod-egg": "^1.0.0",
     "egg-bin": "^4.13.0",

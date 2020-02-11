@@ -1,6 +1,6 @@
 /*
- * @Author: doramart 
- * @Date: 2019-07-16 14:06:28 
+ * @Author: doramart
+ * @Date: 2019-07-16 14:06:28
  * @Discription 内存数据库
  * @Last Modified by: doramart
  * @Last Modified time: 2019-07-16 15:33:41
@@ -14,124 +14,125 @@ let hitCount = 0;
 let missCount = 0;
 let size = 0;
 
-exports.set = function (key, value, time, timeoutCallback) {
-    if (debug) {
-        console.log('caching: %s = %j (@%s)', key, value, time);
-    }
+exports.set = function(key, value, time, timeoutCallback) {
+  if (debug) {
+    console.log('caching: %s = %j (@%s)', key, value, time);
+  }
 
-    if (typeof time !== 'undefined' && (typeof time !== 'number' || isNaN(time) || time <= 0)) {
-        throw new Error('Cache timeout must be a positive number');
-    } else if (typeof timeoutCallback !== 'undefined' && typeof timeoutCallback !== 'function') {
-        throw new Error('Cache timeout callback must be a function');
-    }
+  if (typeof time !== 'undefined' && (typeof time !== 'number' || isNaN(time) || time <= 0)) {
+    throw new Error('Cache timeout must be a positive number');
+  } else if (typeof timeoutCallback !== 'undefined' && typeof timeoutCallback !== 'function') {
+    throw new Error('Cache timeout callback must be a function');
+  }
 
-    let oldRecord = cache[key];
-    if (oldRecord) {
-        clearTimeout(oldRecord.timeout);
-    } else {
-        size++;
-    }
+  const oldRecord = cache[key];
+  if (oldRecord) {
+    clearTimeout(oldRecord.timeout);
+  } else {
+    size++;
+  }
 
-    let record = {
-        value: value,
-        expire: time + Date.now()
-    };
+  const record = {
+    value,
+    expire: time + Date.now(),
+  };
 
-    if (!isNaN(record.expire)) {
-        record.timeout = setTimeout(function () {
-            _del(key);
-            if (timeoutCallback) {
-                timeoutCallback(key, value);
-            }
-        }, time);
-    }
+  if (!isNaN(record.expire)) {
+    record.timeout = setTimeout(function() {
+      _del(key);
+      if (timeoutCallback) {
+        timeoutCallback(key, value);
+      }
+    }, time);
+  }
 
-    cache[key] = record;
-    return value;
+  cache[key] = record;
+  return value;
 };
 
-exports.del = function (key) {
-    let canDelete = true;
+exports.del = function(key) {
+  let canDelete = true;
 
-    let oldRecord = cache[key];
-    if (oldRecord) {
-        clearTimeout(oldRecord.timeout);
-        if (!isNaN(oldRecord.expire) && oldRecord.expire < Date.now()) {
-            canDelete = false;
-        }
-    } else {
-        canDelete = false;
+  const oldRecord = cache[key];
+  if (oldRecord) {
+    clearTimeout(oldRecord.timeout);
+    if (!isNaN(oldRecord.expire) && oldRecord.expire < Date.now()) {
+      canDelete = false;
     }
+  } else {
+    canDelete = false;
+  }
 
-    if (canDelete) {
-        _del(key);
-    }
+  if (canDelete) {
+    _del(key);
+  }
 
-    return canDelete;
+  return canDelete;
 };
 
 function _del(key) {
-    size--;
-    delete cache[key];
+  size--;
+  delete cache[key];
 }
 
-exports.clear = function () {
-    for (let key in cache) {
-        clearTimeout(cache[key].timeout);
-    }
-    size = 0;
-    cache = Object.create(null);
-    if (debug) {
-        hitCount = 0;
-        missCount = 0;
-    }
+exports.clear = function() {
+  for (const key in cache) {
+    clearTimeout(cache[key].timeout);
+  }
+  size = 0;
+  cache = Object.create(null);
+  if (debug) {
+    hitCount = 0;
+    missCount = 0;
+  }
 };
 
-exports.get = function (key, callback = () => {}) {
-    let data = cache[key];
-    if (typeof data != "undefined") {
-        if (isNaN(data.expire) || data.expire >= Date.now()) {
-            if (debug) hitCount++;
-            callback(data.value);
-        } else {
-            // free some space
-            if (debug) missCount++;
-            size--;
-            delete cache[key];
-        }
+exports.get = function(key, callback = () => {}) {
+  const data = cache[key];
+  if (typeof data !== 'undefined') {
+    if (isNaN(data.expire) || data.expire >= Date.now()) {
+      if (debug) hitCount++;
+      callback(data.value);
     } else {
-        if (debug) {
-            missCount++;
-        }
-        callback(null);
+      // free some space
+      if (debug) missCount++;
+      size--;
+      delete cache[key];
     }
-};
-
-exports.size = function () {
-    return size;
-};
-
-exports.memsize = function () {
-    let size = 0,
-        key;
-    for (key in cache) {
-        size++;
+  } else {
+    if (debug) {
+      missCount++;
     }
-    return size;
+    callback(null);
+  }
 };
 
-exports.debug = function (bool) {
-    debug = bool;
+exports.size = function() {
+  return size;
 };
 
-exports.hits = function () {
-    return hitCount;
+exports.memsize = function() {
+  let size = 0,
+    // eslint-disable-next-line no-unused-vars
+    key;
+  for (key in cache) {
+    size++;
+  }
+  return size;
 };
 
-exports.misses = function () {
-    return missCount;
+exports.debug = function(bool) {
+  debug = bool;
 };
 
-exports.keys = function () {
-    return Object.keys(cache);
+exports.hits = function() {
+  return hitCount;
+};
+
+exports.misses = function() {
+  return missCount;
+};
+
+exports.keys = function() {
+  return Object.keys(cache);
 };
