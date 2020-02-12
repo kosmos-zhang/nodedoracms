@@ -22,7 +22,7 @@ if (docState === 'prd') {
     if (fs.existsSync(targetPath)) {
       const apiDocHtmlText = fs.readFileSync(targetPath, 'utf-8');
       const reg = new RegExp('http://localhost:8080', 'g');
-      const newApiHtmlText = apiDocHtmlText.replace(reg, 'http://111.229.88.118:8080');
+      const newApiHtmlText = apiDocHtmlText.replace(reg, 'http://localhost:8080');
       fs.writeFileSync(targetPath, newApiHtmlText);
     }
   }

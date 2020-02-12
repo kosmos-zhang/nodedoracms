@@ -30,7 +30,7 @@ module.exports = app => {
     },
     siteDomain: {
       type: String,
-      default: 'http://111.229.88.118:8080/',
+      default: 'http://localhost:8080/',
     },
     siteDiscription: {
       type: String,
