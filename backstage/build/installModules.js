@@ -1,21 +1,23 @@
+'use strict';
+
 const path = require('path');
-var modulesPath = path.resolve(__dirname, '../');
-var shell = require('shelljs');
+const modulesPath = path.resolve(__dirname, '../');
+const shell = require('shelljs');
 const {
-    scanforder
+  scanforder,
 } = require('./utils');
 
 // 指定打包模块
-let designatedModule = [];
+const designatedModule = [];
 
 
 let targetBuildModules = scanforder(modulesPath);
 if (designatedModule.length > 0) {
-    targetBuildModules = designatedModule;
+  targetBuildModules = designatedModule;
 }
-targetBuildModules.forEach(function (name) {
-    if (name != '.git' && name != 'build' && name != 'publicMethods' && name != 'dist') {
-        shell.cd(`${modulesPath}/${name}`);
-        shell.exec('cnpm install');
-    }
+targetBuildModules.forEach(function(name) {
+  if (name !== '.git' && name !== 'build' && name !== 'publicMethods' && name !== 'dist') {
+    shell.cd(`${modulesPath}/${name}`);
+    shell.exec('cnpm install');
+  }
 });
