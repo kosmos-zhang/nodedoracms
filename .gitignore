@@ -8,9 +8,9 @@ run/
 *.swp
 *.vscode
 package-lock.json
-# app/public/upload
+app/public/upload
 app/public/apidoc
 app/ext
 app/controller/ext
 dist/*
-backstage/dist/*
+#backstage/dist/*
