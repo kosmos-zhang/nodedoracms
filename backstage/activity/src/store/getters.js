@@ -1,6 +1,5 @@
 const getters = {
-  activityFormState: state => state.content.formState,
-  activityList: state => state.content.activityList,
-  directUserFormState: state => state.content.directUser.formState,
+  activityFormState: state => state.activity.formState,
+  activityList: state => state.activity.activityList,
 }
 export default getters

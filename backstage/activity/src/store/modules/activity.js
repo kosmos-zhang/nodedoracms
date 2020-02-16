@@ -40,17 +40,6 @@ const state = {
     pageInfo: {},
     docs: []
   },
-  directUser: {
-    formState: {
-      show: false,
-      edit: false,
-      formData: {
-        name: '',
-        alias: '',
-        targetUser: ''
-      }
-    }
-  },
 }
 
 const mutations = {
@@ -85,18 +74,8 @@ const mutations = {
   [types.ACTIVITY_LIST](state, activityList) {
     state.activityList = activityList
   },
-  [types.ACTIVITY_ONE](state, content) {
-    state.content = content
-  },
-  [types.DIRECTUSERFORMSTATE](state, formState) {
-    state.directUser.formState.show = formState.show;
-    state.directUser.formState.edit = formState.edit;
-    state.directUser.formState.type = formState.type;
-    state.directUser.formState.formData = Object.assign({
-      name: '',
-      alias: '',
-      targetUser: ''
-    }, formState.formData);
+  [types.ACTIVITY_ONE](state, activity) {
+    state.activity = activity
   },
 }
 
@@ -111,25 +90,6 @@ const actions = {
     commit(types.ACTIVITY_FORMSTATE, {
       edit: params.edit,
       formData: params.formData
-    })
-  },
-  showDirectUserForm: ({
-    commit
-  }, params = {
-    edit: false,
-    formData: {}
-  }) => {
-    commit(types.DIRECTUSERFORMSTATE, {
-      show: true,
-      edit: params.edit,
-      formData: params.formData
-    })
-  },
-  hideDirectUserForm: ({
-    commit
-  }) => {
-    commit(types.DIRECTUSERFORMSTATE, {
-      show: false
     })
   },
   getActivityList({

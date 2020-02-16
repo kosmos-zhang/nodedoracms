@@ -1,7 +1,6 @@
 <template>
   <div :class="classObj" class="content">
     <div class="main-container">
-      <DirectUser :dialogState="directUserFormState" :ids="selectlist" />
       <el-row class="dr-datatable">
         <el-col :span="24">
           <TopBar
@@ -23,7 +22,6 @@
 </template>
 <script>
 import DataTable from "./dataTable.vue";
-import DirectUser from "./directUser.vue";
 import TopBar from "../common/TopBar.vue";
 import Pagination from "../common/Pagination.vue";
 import { mapGetters, mapActions } from "vuex";
@@ -42,7 +40,6 @@ export default {
     DataTable,
     TopBar,
     Pagination,
-    DirectUser
   },
   methods: {
     changeSelect(ids) {
@@ -50,7 +47,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["activityList", "directUserFormState"]),
+    ...mapGetters(["activityList"]),
     classObj() {
       return {
         hideSidebar: !this.sidebarOpened,

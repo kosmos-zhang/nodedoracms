@@ -22,26 +22,6 @@
         <el-form-item v-if="formState.formData.state == '3'" label="驳回原因" prop="dismissReason">
           <el-input size="small" v-model="formState.formData.dismissReason"></el-input>
         </el-form-item>
-        <el-form-item label="指定用户" prop="targetUser">
-          <el-select
-            size="small"
-            v-model="formState.formData.targetUser"
-            filterable
-            remote
-            reserve-keyword
-            placeholder="请输入要分配的用户名"
-            :remote-method="remoteUserMethod"
-            :loading="userLoading"
-            @change="changeTargetUser"
-          >
-            <el-option
-              v-for="item in selectUserList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item :label="$t('activities.title')" prop="title">
           <el-input size="small" v-model="formState.formData.title"></el-input>
         </el-form-item>
@@ -216,29 +196,11 @@ export default {
       },
       currentType: "1",
       rules: {
-        targetUser: [
-          {
-            required: true,
-            message: this.$t("validate.selectNull", {
-              label: "指定用户"
-            }),
-            trigger: "blur"
-          }
-        ],
         sImg: [
           {
             required: true,
             message: this.$t("validate.selectNull", {
               label: "缩略图"
-            }),
-            trigger: "blur"
-          }
-        ],
-        categories: [
-          {
-            required: true,
-            message: this.$t("validate.selectNull", {
-              label: this.$t("activities.categories")
             }),
             trigger: "blur"
           }
@@ -271,31 +233,6 @@ export default {
             max: 50,
             message: this.$t("validate.rangelength", { min: 2, max: 50 }),
             trigger: "blur"
-          }
-        ],
-        tags: [
-          {
-            required: true,
-            message: this.$t("validate.inputNull", {
-              label: this.$t("activities.tags")
-            }),
-            trigger: "blur"
-          },
-          {
-            validator: (rule, value, callback) => {
-              if (_.isEmpty(value)) {
-                callback(
-                  new Error(
-                    this.$t("validate.selectNull", {
-                      label: this.$t("activities.tags")
-                    })
-                  )
-                );
-              } else {
-                callback();
-              }
-            },
-            trigger: "change"
           }
         ],
         discription: [
@@ -343,15 +280,6 @@ export default {
           "activityAuthor",
           JSON.stringify(targetUserInfo[0])
         );
-      }
-    },
-    remoteUserMethod(query) {
-      if (query !== "") {
-        this.userLoading = true;
-        let _this = this;
-        this.queryUserListByParams({ searchkey: query });
-      } else {
-        this.selectUserList = [];
       }
     },
     queryUserListByParams(params = {}) {
@@ -457,9 +385,6 @@ export default {
         );
       }
       return (isJPG || isPNG || isGIF) && isLt2M;
-    },
-    handleChangeCategory(value) {
-      console.log(value);
     },
     backToList() {
       this.$router.push(this.$root.adminBasePath + "/activity");
