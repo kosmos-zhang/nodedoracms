@@ -7,6 +7,7 @@ module.exports = appInfo => {
     admin_root_path: 'http://localhost',
     // DEV_CONFIG_MODULES_BEGIN
     dev_modules: [
+      // 'activity',
       // 'navbar',
       // 'dashboard',
       // 'adminGroup',
