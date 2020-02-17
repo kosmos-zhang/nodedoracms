@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
 
-  title: 'DoraCMS Admin',
+  title: '老港俪人荟',
 
   /**
    * @type {boolean} true | false

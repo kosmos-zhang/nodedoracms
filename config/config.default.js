@@ -49,7 +49,7 @@ module.exports = appInfo => {
     // cdn域名
     origin: 'https://cdn.html-js.cn',
     // 系统服务提供商
-    doracms_api: 'https://lgfl.daisyyang.cn/api',
+    doracms_api: 'https://api.html-js.cn',
     // 模板文件目录
     temp_static_forder: process.cwd() + '/app/public/themes/',
     temp_view_forder: process.cwd() + '/app/view/',
