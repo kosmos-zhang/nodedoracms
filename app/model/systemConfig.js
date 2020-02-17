@@ -2,7 +2,6 @@
  * Created by Administrator on 2015/4/15.
  * 数据操作记录
  */
-'use strict';
 
 module.exports = app => {
 
@@ -22,7 +21,7 @@ module.exports = app => {
         },
         siteName: {
             type: String,
-      default: '老港俪人荟',
+            default: '老港俪人荟',
         },
         ogTitle: {
             type: String,

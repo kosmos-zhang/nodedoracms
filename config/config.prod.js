@@ -29,6 +29,5 @@ module.exports = appInfo => {
         // 服务地址配置
         server_path: 'https://lgfl.daisyyang.cn',
         server_api: 'https://lgfl.daisyyang.cn/api',
-
-  };
+    }
 };

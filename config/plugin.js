@@ -188,6 +188,16 @@ exports.doraMailDelivery = {
     path: path.join(__dirname, "../lib/plugin/egg-dora-maildelivery")
 };
 // doraMailDeliveryPluginEnd
+
+// PLUGIN_NORMALPLUGIN_END
+
+// doraMailDeliveryPluginBegin
+exports.doraMailDelivery = {
+    enable: true,
+    package: 'egg-dora-maildelivery',
+    path: path.join(__dirname, "../lib/plugin/egg-dora-maildelivery")
+};
+// doraMailDeliveryPluginEnd
 // PLUGIN_NORMALPLUGIN_END
 
 
