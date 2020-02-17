@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard-editor-container">
-    <!--<github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />-->
+    <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
+
     <panel-group :basicInfo="basicInfo" />
     <el-dialog
       width="55%"
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+import GithubCorner from "@/components/GithubCorner";
 import PanelGroup from "./components/PanelGroup";
 import ResourceView from "./components/ResourceView.vue";
 import TransactionTable from "./components/TransactionTable";
@@ -57,6 +59,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "DashboardAdmin",
   components: {
+    GithubCorner,
     PanelGroup,
     ResourceView,
     TransactionTable,

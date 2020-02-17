@@ -30,7 +30,7 @@
                     <div class="col-sm-2 col-md-2">
                         <div class="site-name ">
                             <a href="{{homelink}}" id="logo">
-                                <img src="{{staticRootPath}}/themes/{{staticforder}}/images/logo.png" alt="{{siteInfo.title}}" />
+                                <img src="{{siteInfo.siteLogo}}" alt="{{siteInfo.title}}" />
                             </a>
                             </a>
                         </div>
@@ -85,6 +85,10 @@
                                     </ul>
                                 </li>
                                 {% endif %}
+                                <li>
+                                    <button type="button" ms-on-click="@postArticel"
+                                        class="btn btn-primary btn-sm navbar-btn">{{__('lc_myPostArticels')}}</button>
+                                </li>
                             </ul>
                         </div>
                     </div>

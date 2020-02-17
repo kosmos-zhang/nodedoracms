@@ -2,7 +2,7 @@
  * @Author: doramart 
  * @Date: 2019-06-20 18:55:40 
  * @Last Modified by: doramart
- * @Last Modified time: 2020-01-22 10:33:02
+ * @Last Modified time: 2020-02-13 16:17:55
  */
 const Controller = require('egg').Controller;
 const {
@@ -181,8 +181,6 @@ class AdminUserController extends Controller {
                     formObj.password = fields.password;
                 }
             }
-
-
 
             let oldResource = await ctx.service.adminUser.item(ctx, {
                 query: {
@@ -389,10 +387,24 @@ class AdminUserController extends Controller {
                 })
             }
 
+            let adminUserInfo = await ctx.service.adminUser.item(ctx, {
+                query: {
+                    _id: ctx.session.adminUserInfo._id
+                },
+                populate: [{
+                    path: 'group',
+                    select: 'power _id enable name'
+                }, {
+                    path: 'targetEditor',
+                    select: 'userName _id'
+                }],
+                files: 'enable password _id email userName logo'
+            })
+
             let renderData = {
                 noticeCounts,
                 loginState: true,
-                userInfo: ctx.session.adminUserInfo
+                userInfo: adminUserInfo
             };
 
             ctx.helper.renderSuccess(ctx, {
@@ -475,7 +487,7 @@ class AdminUserController extends Controller {
                     let pluginStr = `dora${pathItem.charAt(0).toUpperCase() + pathItem.slice(1)}`;
 
                     if (plugins.indexOf(pluginStr) >= 0 && this.app.config[pluginStr].adminUrl) {
-                        let adminUrlItem = this.app.config[pluginStr].adminUrl;
+                        let adminUrlItem = this.app.config.admin_root_path + this.app.config[pluginStr].adminUrl;
                         if (adminUrlItem instanceof Array) {
                             for (const routerItem of adminUrlItem) {
                                 renderMap.push({

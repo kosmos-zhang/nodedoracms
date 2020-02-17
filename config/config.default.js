@@ -98,6 +98,7 @@ module.exports = appInfo => {
     multipart: {
       fileSize: '5mb',
       mode: 'stream',
+      fileExtensions: ['.doc', '.docx'], // 扩展几种上传的文件格式
     },
 
     // 数据备份定时
@@ -207,6 +208,17 @@ module.exports = appInfo => {
     },
     // doraVersionManagePluginEnd
 
+    // doraMailTemplatePluginBegin
+    mailTemplateRouter: {
+      match: [ctx => ctx.path.startsWith('/manage/mailTemplate'), ctx => ctx.path.startsWith('/api/mailTemplate')],
+    },
+    // doraMailTemplatePluginEnd
+
+    // doraMailDeliveryPluginBegin
+    mailDeliveryRouter: {
+      match: [ctx => ctx.path.startsWith('/manage/mailDelivery'), ctx => ctx.path.startsWith('/api/mailDelivery')],
+    },
+    // doraMailDeliveryPluginEnd
 
     renderCmsRouter: {
       match: [ ctx => ctx.path.startsWith('/manage/renderCms') ],
@@ -225,7 +237,7 @@ module.exports = appInfo => {
         upload_path: process.cwd() + '/app/public',
         static_root_path: 'cms', // 针对云存储可设置
       },
-      match: [ ctx => ctx.path.startsWith('/manage/uploadFile'), ctx => ctx.path.startsWith('/api/upload/files'), ctx => ctx.path.startsWith('/api/upload/ueditor') ],
+      match: [ctx => ctx.path.startsWith('/manage/uploadFile'), ctx => ctx.path.startsWith('/api/upload/files'), ctx => ctx.path.startsWith('/api/upload/ueditor'), ctx => ctx.path.startsWith('/api/upload/filePath')],
     },
     // doraUploadFilePluginEnd
 

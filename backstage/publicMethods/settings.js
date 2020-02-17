@@ -1,3 +1,4 @@
+'use strict';
 module.exports = {
 
   title: '老港俪人荟',
@@ -25,5 +26,5 @@ module.exports = {
   // 宿主工程目录
   host_project_path: '/Users/dora/Documents/dora/coding.net/egg-cms',
   // 七牛文件上传目录
-  qiniuStaticPath: 'cms/plugins/static/admin/'
-}
+  qiniuStaticPath: 'cms/plugins/static/admin/',
+};

@@ -22,26 +22,7 @@
         <el-form-item v-if="formState.formData.state == '3'" label="驳回原因" prop="dismissReason">
           <el-input size="small" v-model="formState.formData.dismissReason"></el-input>
         </el-form-item>
-        <el-form-item label="指定用户" prop="targetUser">
-          <el-select
-            size="small"
-            v-model="formState.formData.targetUser"
-            filterable
-            remote
-            reserve-keyword
-            placeholder="请输入要分配的用户名"
-            :remote-method="remoteUserMethod"
-            :loading="userLoading"
-            @change="changeTargetUser"
-          >
-            <el-option
-              v-for="item in selectUserList"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+
         <el-form-item :label="$t('contents.title')" prop="title">
           <el-input size="small" v-model="formState.formData.title"></el-input>
         </el-form-item>
@@ -73,6 +54,7 @@
               multiple
               filterable
               allow-create
+              default-first-option
               :placeholder="$t('validate.selectNull', {label: this.$t('contents.tags')})"
             >
               <el-option
@@ -103,8 +85,25 @@
         <el-form-item :label="$t('contents.discription')" prop="discription">
           <el-input size="small" type="textarea" v-model="formState.formData.discription"></el-input>
         </el-form-item>
+        <el-form-item :label="$t('contents.uploadWord')" prop="uploadWord">
+          <el-upload
+            class="upload-demo"
+            action="/api/content/getWordHtmlContent"
+            :on-preview="handleWordPreview"
+            :on-remove="handleWordRemove"
+            :before-remove="beforeWordRemove"
+            :on-success="uploadWordSuccess"
+            :before-upload="beforeWordUpload"
+            multiple
+            :limit="1"
+            :on-exceed="handleWordExceed"
+            :file-list="wordFileList"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传doc/docx文件，且不超过5mb</div>
+          </el-upload>
+        </el-form-item>
         <el-form-item :label="$t('contents.comments')" prop="comments">
-          <!-- <Ueditor @ready="editorReady" ref="ueditor"></Ueditor> -->
           <vue-ueditor-wrap
             class="editorForm"
             @ready="editorReady"
@@ -191,6 +190,10 @@
 import VueUeditorWrap from "vue-ueditor-wrap";
 import { initEvent } from "@root/publicMethods/events";
 import {
+  showFullScreenLoading,
+  tryHideFullScreenLoading
+} from "@root/publicMethods/axiosLoading";
+import {
   getOneContent,
   addContent,
   updateContent,
@@ -206,6 +209,8 @@ export default {
   },
   data() {
     return {
+      wordFileList: [],
+      wordFileUrl: "",
       sidebarOpened: true,
       device: "desktop",
       contentState: [
@@ -363,25 +368,46 @@ export default {
     VueUeditorWrap
   },
   methods: {
-    changeTargetUser(value) {
-      let targetUserInfo = _.filter(this.selectUserList, item => {
-        return item.value == value;
+    handleWordRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handleWordPreview(file) {
+      console.log(file);
+    },
+    handleWordExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 1 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeWordRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    uploadWordSuccess(res, file) {
+      tryHideFullScreenLoading();
+      this.wordFileUrl = res.data ? res.data : "";
+      this.ueditorObj.setContent(res.data);
+      this.$message({
+        message: "恭喜，导入成功！",
+        type: "success"
       });
-      if (!_.isEmpty(targetUserInfo)) {
-        localStorage.setItem(
-          "contentAuthor",
-          JSON.stringify(targetUserInfo[0])
+    },
+    beforeWordUpload(file) {
+      const isDocx = file.type.indexOf("officedocument") > 0 ? true : false;
+      const isLt5M = file.size / 1024 / 1024 < 5;
+      if (!isDocx) {
+        this.$message.error("只能上传docx,doc格式！");
+      }
+      if (!isLt5M) {
+        this.$message.error(
+          this.$t("validate.limitUploadImgSize", { size: 5 })
         );
       }
-    },
-    remoteUserMethod(query) {
-      if (query !== "") {
-        this.userLoading = true;
-        let _this = this;
-        this.queryUserListByParams({ searchkey: query });
-      } else {
-        this.selectUserList = [];
+      if (isDocx && isLt5M) {
+        showFullScreenLoading();
       }
+      return isDocx && isLt5M;
     },
     queryUserListByParams(params = {}) {
       let _this = this;
@@ -414,15 +440,6 @@ export default {
             let initFormData = Object.assign({}, this.formState.formData, {
               sImg: randomImg
             });
-            // 保留原有指定作者
-            let oldUauthor = localStorage.getItem("contentAuthor");
-            if (oldUauthor) {
-              let targetUser = JSON.parse(oldUauthor);
-              this.queryUserListByParams({
-                searchkey: targetUser.label
-              });
-              Object.assign(initFormData, { targetUser: targetUser.value });
-            }
             this.$store.dispatch("content/showContentForm", {
               formData: initFormData
             });
@@ -500,6 +517,7 @@ export default {
             comments: this.ueditorObj.getContent(),
             simpleComments: this.ueditorObj.getPlainTxt()
           });
+
           // 更新
           if (this.formState.edit) {
             updateContent(params).then(result => {
@@ -515,6 +533,16 @@ export default {
             });
           } else {
             // 新增
+            if (
+              !_.isEmpty(this.adminUserInfo) &&
+              !_.isEmpty(this.adminUserInfo.targetEditor)
+            ) {
+              params.targetUser = this.adminUserInfo.targetEditor._id;
+            } else {
+              this.$message.error("在添加文档之前，您需要指定一个默认编辑！");
+              this.$router.push(this.$root.adminBasePath + "/content");
+              return false;
+            }
             addContent(params).then(result => {
               if (result.status === 200) {
                 this.$router.push(this.$root.adminBasePath + "/content");
@@ -535,7 +563,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["contentTagList", "contentCategoryList"]),
+    ...mapGetters(["contentTagList", "contentCategoryList", "adminUserInfo"]),
     formState() {
       return this.$store.getters.contentFormState;
     },
@@ -550,6 +578,7 @@ export default {
   },
   mounted() {
     initEvent(this);
+    this.$store.dispatch("adminUser/getUserInfo");
     // 针对手动页面刷新
     let _this = this;
     if (this.$route.params.id) {
