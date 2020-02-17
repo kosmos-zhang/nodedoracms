@@ -27,7 +27,7 @@ export function getOneActivity(params) {
 
 export function addActivity(data) {
   return request({
-    url: '/manage/activity/addOne',
+    url: '/manage/activity/addActivity',
     data,
     method: 'post'
   })
@@ -36,22 +36,6 @@ export function addActivity(data) {
 export function updateActivity(data) {
   return request({
     url: '/manage/activity/updateOne',
-    data,
-    method: 'post'
-  })
-}
-
-export function updateActivityToTop(data) {
-  return request({
-    url: '/manage/activity/topActivity',
-    data,
-    method: 'post'
-  })
-}
-
-export function roofActivity(data) {
-  return request({
-    url: '/manage/activity/roofActivity',
     data,
     method: 'post'
   })

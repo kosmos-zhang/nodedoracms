@@ -10,43 +10,6 @@
       @selection-change="handleActivitySelectionChange"
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="isTop" :label="$t('activities.rec')" width="55" show-overflow-tooltip>
-        <template slot-scope="scope">
-          <svg-icon
-            :style="yellow"
-            v-show="scope.row.isTop === 1"
-            @click="topActivity(scope.$index, dataList)"
-            icon-class="icon_star_fill"
-          />
-          <svg-icon
-            :style="gray"
-            v-show="scope.row.isTop != 1"
-            @click="topActivity(scope.$index, dataList)"
-            icon-class="icon_star"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="roofPlacement"
-        :label="$t('activities.roofPlacement')"
-        width="55"
-        show-overflow-tooltip
-      >
-        <template slot-scope="scope">
-          <svg-icon
-            :style="green"
-            v-show="scope.row.isTop === 1 && scope.row.roofPlacement == 1"
-            @click="roofActivity(scope.$index, dataList)"
-            icon-class="icon_ping"
-          />
-          <svg-icon
-            :style="gray"
-            v-show="scope.row.isTop === 1 && scope.row.roofPlacement != 1"
-            @click="roofActivity(scope.$index, dataList)"
-            icon-class="icon_ding"
-          />
-        </template>
-      </el-table-column>
       <el-table-column prop="title" :label="$t('activities.title')" width="350" show-overflow-tooltip>
         <template slot-scope="scope">
           <div v-if="scope.row.state =='2'">
@@ -62,22 +25,6 @@
       </el-table-column>
       <el-table-column prop="updateDate" :label="$t('activities.updateDate')" width="180">
         <template slot-scope="scope">{{scope.row.updateDate}}</template>
-      </el-table-column>
-      <el-table-column
-        prop="categories"
-        :label="$t('activities.categories')"
-        show-overflow-tooltip
-        width="120"
-      >
-        <template slot-scope="scope">
-          <span>{{(scope.row.categories&&scope.row.categories[0])?scope.row.categories[0].name:''}}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="tags" :label="$t('activities.tags')" show-overflow-tooltip>
-        <template slot-scope="scope">
-          <span v-for="tag in scope.row.tags" :key="tag._id">{{tag.name+','}}</span>
-        </template>
       </el-table-column>
 
       <el-table-column prop="clickNum" :label="$t('activities.clickNum')" show-overflow-tooltip></el-table-column>
@@ -126,7 +73,7 @@
 }
 </style>
 <script>
-import { deleteActivity, roofActivity, updateActivityToTop } from "@/api/activity";
+import { deleteActivity } from "@/api/activity";
 import _ from "lodash";
 export default {
   props: {
@@ -163,38 +110,6 @@ export default {
       this.$router.push(
         this.$root.adminBasePath + "/activity/editActivity/" + rowData._id
       );
-    },
-    topActivity(index, rows) {
-      let contentData = rows[index];
-      let targetParams = {
-        _id: contentData._id,
-        isTop: contentData.isTop == 1 ? 0 : 1
-      };
-      updateActivityToTop(targetParams).then(result => {
-        if (result.status === 200) {
-          this.$store.dispatch("activity/getActivityList", this.pageInfo);
-        } else {
-          this.$message.error(result.message);
-        }
-      });
-    },
-    roofActivity(index, rows) {
-      let contentData = rows[index];
-      // 推荐的才允许置顶
-      if (contentData.isTop != 1) {
-        return false;
-      }
-      let targetParams = {
-        _id: contentData._id,
-        roofPlacement: contentData.roofPlacement == "1" ? "0" : "1"
-      };
-      roofActivity(targetParams).then(result => {
-        if (result.status === 200) {
-          this.$store.dispatch("activity/getActivityList", this.pageInfo);
-        } else {
-          this.$message.error(result.message);
-        }
-      });
     },
     deleteActivity(index, rows) {
       this.$confirm(

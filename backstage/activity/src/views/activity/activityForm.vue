@@ -55,10 +55,10 @@
           <el-input size="small" type="textarea" v-model="formState.formData.discription"></el-input>
         </el-form-item>
         <el-form-item :label="$t('activities.comments')" prop="comments">
-          <!-- <Ueditor @ready="editorReady" ref="ueditor"></Ueditor> -->
           <vue-ueditor-wrap
             class="editorForm"
             @ready="editorReady"
+            @error="editorError"
             v-model="formState.formData.comments"
             :config="editorConfig"
           ></vue-ueditor-wrap>
@@ -271,17 +271,6 @@ export default {
     VueUeditorWrap
   },
   methods: {
-    changeTargetUser(value) {
-      let targetUserInfo = _.filter(this.selectUserList, item => {
-        return item.value == value;
-      });
-      if (!_.isEmpty(targetUserInfo)) {
-        localStorage.setItem(
-          "activityAuthor",
-          JSON.stringify(targetUserInfo[0])
-        );
-      }
-    },
     queryUserListByParams(params = {}) {
       let _this = this;
       regUserList(params)
@@ -359,7 +348,11 @@ export default {
       }
     },
     editorReady(instance) {
+      console.log('instance editor');
       this.ueditorObj = instance;
+    },
+    editorError(instance) {
+      console.log('instance editor error:' + instance);
     },
 
     handleAvatarSuccess(res, file) {
@@ -391,9 +384,10 @@ export default {
     },
     submitForm(formName, type = "") {
       this.$refs[formName].validate(valid => {
+        console.log('valid');
         if (valid) {
           let params = Object.assign({}, this.formState.formData, {
-            comments: this.ueditorObj.getActivity(),
+            comments: this.ueditorObj.getContent(),
             simpleComments: this.ueditorObj.getPlainTxt()
           });
           // 更新
@@ -452,22 +446,8 @@ export default {
       getOneActivity({ id: this.$route.params.id }).then(result => {
         if (result.status === 200) {
           if (result.data) {
-            let activityObj = result.data,
-              categoryIdArr = [],
-              tagsArr = [];
+            let activityObj = result.data;
 
-            if (activityObj.categories) {
-              activityObj.categories.map((item, index) => {
-                item && categoryIdArr.push(item._id);
-              });
-              activityObj.categories = categoryIdArr;
-            }
-            if (activityObj.tags) {
-              activityObj.tags.map((item, index) => {
-                item && tagsArr.push(item._id);
-              });
-              activityObj.tags = tagsArr;
-            }
             if (activityObj.keywords) {
               activityObj.keywords = activityObj.keywords.join();
             }
