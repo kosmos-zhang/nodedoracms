@@ -159,12 +159,28 @@ exports.doraUploadFile = {
 // doraUploadFilePluginEnd
 
 // doraValidatePluginBegin
-exports.doraValidate = {
+exports.validate = {
     enable: true,
     package: 'egg-dora-validate',
     
 };
 // doraValidatePluginEnd
+
+// doraMailTemplatePluginBegin
+exports.doraMailTemplate = {
+    enable: true,
+    package: 'egg-dora-mailtemplate',
+    path: path.join(__dirname, "../lib/plugin/egg-dora-mailtemplate")
+};
+// doraMailTemplatePluginEnd
+
+// doraMailDeliveryPluginBegin
+exports.doraMailDelivery = {
+    enable: true,
+    package: 'egg-dora-maildelivery',
+    path: path.join(__dirname, "../lib/plugin/egg-dora-maildelivery")
+};
+// doraMailDeliveryPluginEnd
 
 // PLUGIN_NORMALPLUGIN_END
 

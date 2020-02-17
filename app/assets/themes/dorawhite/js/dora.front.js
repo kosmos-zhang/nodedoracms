@@ -413,7 +413,7 @@ function askContentThu(askContentThumbsUp) {
 
     })
 }
-// 推荐文档静态部分
+// 推荐帖子静态部分
 var rcStaticlVm = avalon.define({
     $id: 'rcStatic',
     askLike: (e, type, targetId) => {
@@ -1327,53 +1327,6 @@ var reSetPsdByEmailVm = avalon.define({
                     }
                 }, 'post', params);
 
-            }
-        }
-    }
-})
-
-/**
- * 
- * sendEmail avalon controller
- * 
- */
-var sendEmailInfoVm = avalon.define({
-    $id: 'email-user-info',
-    name: '',
-    email: '',
-    comments: '',
-    phoneNum: '',
-    message: '',
-    showErr: false,
-    validate: {
-        onError: function (reasons) {
-            reasons.forEach(function (reason) {
-                console.log(reason.getMessage())
-            })
-        },
-        onValidateAll: function (reasons) {
-            if (reasons.length) {
-                console.log('有表单没有通过', reasons)
-                sendEmailInfoVm.showErr = true;
-                sendEmailInfoVm.message = reasons[0].message;
-            } else {
-                console.log('全部通过');
-                var params = {
-                    email: sendEmailInfoVm.email,
-                    name: sendEmailInfoVm.name,
-                    phoneNum: sendEmailInfoVm.phoneNum,
-                    comments: sendEmailInfoVm.comments
-                }
-                getAjaxData('/api/user/postEmailToAdminUser', (data) => {
-                    if (data.status == 200) {
-                        layer.msg(data.message, {
-                            icon: 1,
-                            time: msgTime
-                        }, function () {
-                            window.location.href = "/";
-                        });
-                    }
-                }, 'post', params);
             }
         }
     }

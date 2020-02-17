@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '老港俪人荟',
+  title: 'DoraCMS Admin',
 
   /**
    * @type {boolean} true | false
