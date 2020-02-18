@@ -32,9 +32,11 @@ export default {
     commentNum: "评论数",
     clickNum: "点击",
     enable: "显示",
-    author: "作者"
-
-
+    author: "作者",
+    regDateBegin: "预约开始时间",
+    regDateEnd: "预约结束时间",
+    actDateBegin: "活动开始时间",
+    actDateEnd: "活动结束时间",
   },
   //LangEnd
 }

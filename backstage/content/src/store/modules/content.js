@@ -33,7 +33,10 @@ const state = {
       commentNum: 0,
       likeNum: 0,
       dismissReason: '',
-
+      regDateBegin: Date.Date,
+      regDateEnd: Date.Date,
+      actDateBegin: Date.Date,
+      actDateEnd: Date.Date,
     }
   },
   contentList: {
@@ -78,7 +81,11 @@ const mutations = {
       comments: '',
       simpleComments: '',
       commentNum: 0,
-      likeNum: 0
+      likeNum: 0,
+      regDateBegin: Date.Date,
+      regDateEnd: Date.Date,
+      actDateBegin: Date.Date,
+      actDateEnd: Date.Date,
     }, formState.formData);
 
   },

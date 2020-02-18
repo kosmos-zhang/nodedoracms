@@ -38,6 +38,19 @@
           ></el-cascader>
         </el-form-item>
 
+        <div v-if="formState.formData.categories == 'VgsJc1xV'">
+          <el-form-item label="预约时间" prop="regDateBegin">
+            <el-date-picker size="small" v-model="formState.formData.regDateBegin"></el-date-picker>
+            ----
+            <el-date-picker size="small" v-model="formState.formData.regDateEnd"></el-date-picker>
+          </el-form-item>
+          <el-form-item label="活动时间" prop="actDateBegin">
+            <el-date-picker size="small" v-model="formState.formData.actDateBegin"></el-date-picker>
+            ----
+            <el-date-picker size="small" v-model="formState.formData.actDateEnd"></el-date-picker>
+          </el-form-item>
+        </div>
+
         <div v-if="formState.formData.type == '1'">
           <el-form-item :label="$t('contents.stitle')" prop="stitle">
             <el-input size="small" v-model="formState.formData.stitle"></el-input>
@@ -332,6 +345,42 @@ export default {
             trigger: "change"
           }
         ],
+        regDateBegin: [
+          {
+            required: true,
+            message: this.$t("validate.inputNull", {
+              label: this.$t("contents.regDateBegin")
+            }),
+            trigger: "blur"
+          }
+        ],
+        regDateEnd: [
+          {
+            required: true,
+            message: this.$t("validate.inputNull", {
+              label: this.$t("contents.regDateEnd")
+            }),
+            trigger: "blur"
+          }
+        ],
+        actDateBegin: [
+          {
+            required: true,
+            message: this.$t("validate.inputNull", {
+              label: this.$t("contents.actDateBegin")
+            }),
+            trigger: "blur"
+          }
+        ],
+        actDateEnd: [
+          {
+            required: true,
+            message: this.$t("validate.inputNull", {
+              label: this.$t("contents.actDateEnd")
+            }),
+            trigger: "blur"
+          }
+        ],
         discription: [
           {
             required: true,
@@ -533,7 +582,7 @@ export default {
             });
           } else {
             // 新增
-            if (
+            /*if (
               !_.isEmpty(this.adminUserInfo) &&
               !_.isEmpty(this.adminUserInfo.targetEditor)
             ) {
@@ -542,7 +591,7 @@ export default {
               this.$message.error("在添加文档之前，您需要指定一个默认编辑！");
               this.$router.push(this.$root.adminBasePath + "/content");
               return false;
-            }
+            }*/
             addContent(params).then(result => {
               if (result.status === 200) {
                 this.$router.push(this.$root.adminBasePath + "/content");
