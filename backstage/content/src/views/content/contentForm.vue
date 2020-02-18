@@ -582,16 +582,17 @@ export default {
             });
           } else {
             // 新增
-            /*if (
+            if (
               !_.isEmpty(this.adminUserInfo) &&
               !_.isEmpty(this.adminUserInfo.targetEditor)
             ) {
               params.targetUser = this.adminUserInfo.targetEditor._id;
             } else {
-              this.$message.error("在添加文档之前，您需要指定一个默认编辑！");
+              params.targetUser = 'PkG5wCZz';
+/*              this.$message.error("在添加文档之前，您需要指定一个默认编辑！");
               this.$router.push(this.$root.adminBasePath + "/content");
-              return false;
-            }*/
+              return false;*/
+            }
             addContent(params).then(result => {
               if (result.status === 200) {
                 this.$router.push(this.$root.adminBasePath + "/content");
