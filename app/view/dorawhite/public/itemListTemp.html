@@ -41,12 +41,12 @@ item为子元素集合
 				<ul class="post-meta post-meta-actions" ms-controller="rcStatic">
 					{% if item.uAuthor %} {% set renderAuthor = item.uAuthor %} {% else %}
 					{% set renderAuthor = item.author %} {% endif %}
-					<li class="author">
+					<!--<li class="author">
 						<a class="logo">
 							<img src="{{ renderAuthor.logo}}" alt="{{renderAuthor.userName}}">
 						</a>
 						<span>{{renderAuthor.userName}}</span>
-					</li>
+					</li>-->
 					<li><i ms-on-click="@askLike($event,'1','{{item._id}}')" class="fa fa-thumbs-up"
 							aria-hidden="true"></i>
 						<span id="{{'thumbs_'+item._id}}">{{item.likeNum}}</span></li>

@@ -32,12 +32,12 @@ item为子元素集合
 				</div>
 				<ul class="post-meta ">
 					{% if item.author %} {% set renderAuthor = item.author %} {% else %} {% set renderAuthor = item.uAuthor %} {% endif %}
-					<li class="author">
+					<!--<li class="author">
 						<a class="logo">
 							<img src="{{ renderAuthor.logo}}" alt="{{renderAuthor.userName}}">
 						</a>
 						<span>{{renderAuthor.userName}}</span>
-					</li>
+					</li>-->
 					<li>
 						<i class="fa fa-clock-o " aria-hidden="true "></i>&nbsp; {{item.updateDate}}
 					</li>

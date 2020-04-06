@@ -23,14 +23,14 @@ item为子元素集合
 					<div class="post-content " ms-text="@item.discription | cutwords(60)">
 					</div>
 					<ul class="post-meta ">
-						<li class="author">
+						<!--<li class="author">
 							<a class="logo">
 								<img ms-if="@item.author" ms-attr="{src: @showAuthor(@item,'author','logo')}">
 								<img ms-if="@item.uAuthor" ms-attr="{src: @showAuthor(@item,'uAuthor','logo')}">
 							</a>
 							<span ms-if="@item.author" ms-text="@showAuthor(@item,'author','userName')"></span>
 							<span ms-if="@item.uAuthor" ms-text="@showAuthor(@item,'uAuthor','userName')"></span>
-						</li>
+						</li>-->
 						<li>
 							<i class="fa fa-clock-o " aria-hidden="true "></i>&nbsp;&nbsp;
 							<span ms-text="@item.updateDate"></span>
