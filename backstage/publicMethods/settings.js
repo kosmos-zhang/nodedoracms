@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
 
-  title: '老港人大',
+  title: 'BW技术园地',
 
   /**
    * @type {boolean} true | false

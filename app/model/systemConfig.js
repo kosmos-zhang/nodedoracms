@@ -21,7 +21,7 @@ module.exports = app => {
         },
         siteName: {
             type: String,
-            default: '老港人大',
+            default: 'BW技术园地',
         },
         ogTitle: {
             type: String,
@@ -33,11 +33,11 @@ module.exports = app => {
         }, // 站点logo
         siteDomain: {
             type: String,
-            default: 'https://lgrd.daisyyang.cn'
+            default: 'https://www.daisyyang.cn'
         },
         siteDiscription: {
             type: String,
-            default: '老港人大'
+            default: 'BW技术园地'
         },
         siteKeywords: String,
         siteAltKeywords: String, // 标签内的alt关键字

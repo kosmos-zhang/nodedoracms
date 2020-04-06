@@ -27,7 +27,7 @@ module.exports = appInfo => {
             dir: '/home/doraData/logsdir/doracms',
         },
         // 服务地址配置
-        server_path: 'https://lgfl.daisyyang.cn',
-        server_api: 'https://lgfl.daisyyang.cn/api',
+        server_path: 'https://www.daisyyang.cn',
+        server_api: 'https://www.daisyyang.cn/api',
     }
 };
