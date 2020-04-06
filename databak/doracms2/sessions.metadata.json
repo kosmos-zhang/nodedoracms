@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"doracms2.sessions"},{"v":{"$numberInt":"2"},"key":{"expires":{"$numberInt":"1"}},"name":"expires_1","ns":"doracms2.sessions","expireAfterSeconds":{"$numberInt":"0"}}],"uuid":"9893a8c1cda8459299aa44420615328e"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"githubcms.sessions"},{"v":2,"key":{"expires":1},"name":"expires_1","ns":"githubcms.sessions","expireAfterSeconds":0}],"uuid":"1f038c3ad88d43c99afe1296e935caf4"}

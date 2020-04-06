@@ -1,5 +1,5 @@
 export default {
-  topBar:{
+  topBar: {
     keywords: "请输入关键字",
   },
   contents: {
@@ -22,6 +22,7 @@ export default {
     sImg: "缩略图",
     postValue: "推荐指数",
     discription: "内容摘要",
+    uploadWord: "上传Word文档",
     comments: "文档详情",
     flashComments: "快讯摘要",
     rec: "推荐",
@@ -31,9 +32,11 @@ export default {
     commentNum: "评论数",
     clickNum: "点击",
     enable: "显示",
-    author: "作者"
-
-
+    author: "作者",
+    regDateBegin: "预约开始时间",
+    regDateEnd: "预约结束时间",
+    actDateBegin: "活动开始时间",
+    actDateEnd: "活动结束时间",
   },
   //LangEnd
 }

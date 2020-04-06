@@ -1,6 +1,6 @@
 /*
- * @Author: doramart
- * @Date: 2019-06-18 17:27:24
+ * @Author: doramart 
+ * @Date: 2019-06-18 17:27:24 
  * @Last Modified by: doramart
  * @Last Modified time: 2019-10-02 21:50:23
  */
@@ -9,55 +9,54 @@
 const _ = require('lodash');
 
 
-global.remote = function(appCtx) {
+global.remote = function (appCtx) {
 
-  this.tags = [ 'remote' ];
+    this.tags = ['remote'];
 
-  // eslint-disable-next-line no-unused-vars
-  this.parse = function(parser, nodes, lexer) {
-    const tok = parser.nextToken();
-    const args = parser.parseSignature(null, true);
-    parser.advanceAfterBlockEnd(tok.value);
-    return new nodes.CallExtensionAsync(this, 'run', args);
-  };
+    this.parse = function (parser, nodes, lexer) {
+        var tok = parser.nextToken();
+        var args = parser.parseSignature(null, true);
+        parser.advanceAfterBlockEnd(tok.value);
+        return new nodes.CallExtensionAsync(this, 'run', args);
+    };
 
-  this.run = async (context, args, callback) => {
-    const key = _.isEmpty(args.key) ? false : args.key;
-    // console.log('---key--', key);
-    try {
-      const api = _.isEmpty(args.api) ? false : args.api;
-      const queryObj = _.isEmpty(args.query) ? false : JSON.parse(args.query);
-      const pageSize = _.isEmpty(args.pageSize) ? false : args.pageSize;
-      const isPaging = _.isEmpty(args.isPaging) ? '1' : args.isPaging;
+    this.run = async (context, args, callback) => {
+        const key = _.isEmpty(args.key) ? false : args.key;
+        // console.log('---key--', key);
+        try {
+            const api = _.isEmpty(args.api) ? false : args.api;
+            const queryObj = _.isEmpty(args.query) ? false : JSON.parse(args.query);
+            const pageSize = _.isEmpty(args.pageSize) ? false : args.pageSize;
+            const isPaging = _.isEmpty(args.isPaging) ? '1' : args.isPaging;
 
-      let apiData = [];
+            let apiData = [];
 
-      if (!key || !api) {
-        throw new Error(context.ctx.__('validate_error_params'));
-      }
+            if (!key || !api) {
+                throw new Error(context.ctx.__('validate_error_params'));
+            }
 
-      const payload = {};
+            let payload = {};
 
-      if (pageSize) {
-        payload.pageSize = pageSize;
-      }
+            if (pageSize) {
+                payload.pageSize = pageSize;
+            }
 
-      if (isPaging) {
-        payload.isPaging = isPaging;
-      }
+            if (isPaging) {
+                payload.isPaging = isPaging;
+            }
 
-      if (queryObj) {
-        _.assign(payload, queryObj);
-      }
+            if (queryObj) {
+                _.assign(payload, queryObj);
+            }
 
-      apiData = await appCtx.helper.reqJsonData(api, payload);
-      // console.log(payload, '--apiData--', apiData);
-      context.ctx[key] = apiData;
-      return callback(null, '');
-    } catch (error) {
-      context.ctx[key] = [];
-      return callback(null, '');
-    }
+            apiData = await appCtx.helper.reqJsonData(api, payload);
+            // console.log(payload, '--apiData--', apiData);
+            context.ctx[key] = apiData;
+            return callback(null, '');
+        } catch (error) {
+            context.ctx[key] = [];
+            return callback(null, '');
+        }
 
-  };
-};
+    };
+}
